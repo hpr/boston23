@@ -1,4 +1,4 @@
-// ssh habs@ma.sdf.org 'sqlite3 -header -csv ~/db/fantasy1500.db "select * from picks;"' > picks.csv
+// ssh habs@ma.sdf.org "sqlite3 -header -csv ~/db/fantasy1500.db \"select * from picks where meet = 'boston23';\"" > picks.csv
 // ssh habs@ma.sdf.org 'sqlite3 -header -csv ~/db/fantasy1500.db "select * from users;"' > users.csv
 
 import {
@@ -111,7 +111,7 @@ for (const meet of ['ncaai23'] as DLMeet[]) {
     let eventsScored = 0;
     for (const key in picks) {
       const evt = key as AthleticsEvent;
-      if (!entries[meet]![evt]!.results) continue;
+      if (!entries[meet]?.[evt]?.results) continue;
       const { score: evtScore, scorers } = getScore(meet, picks, evt);
       userPicks[evtToGenderedCode(evt)]!.scorers = scorers;
       if (distanceEvents.includes(evt)) distanceScore += evtScore;
