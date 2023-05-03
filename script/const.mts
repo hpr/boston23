@@ -41,6 +41,8 @@ export const distanceEvents: AthleticsEvent[] = [
   "Women's 3000 Meters",
   "Men's 5000 Meters",
   "Women's 5000 Meters",
+  "Women's Marathon",
+  "Men's Marathon",
 ];
 
 export const sprintEvents: AthleticsEvent[] = [

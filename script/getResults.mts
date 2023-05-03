@@ -14,6 +14,7 @@ const resultsLinks: { [k in DLMeet]: string } = {
   birminghamIndoor:
     'https://results-json.microplustimingservices.com/export/WAITF2023/ScheduleByDate_1.JSON',
   ncaai23: 'https://flashresults.ncaa.com/Indoor/2023/index.htm',
+  boston23: 'N/A',
 };
 
 const cache: MeetCache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf-8'));
@@ -27,7 +28,44 @@ const findMatchingEvt = (meetEntries: Entries['ncaai23'], evt: AthleticsEvent) =
 
 for (const key in resultsLinks) {
   const meet = key as DLMeet;
-  if (meet !== 'ncaai23') continue;
+  if (meet !== 'boston23') continue;
+  if (meet + '' === 'boston23') {
+    entries[meet]!["Men's Marathon"]!.results = [
+      '14483236',
+      '14677692',
+      '14758213',
+      '14645745',
+      '14577963',
+      '14208194',
+      '14452474',
+      '14183770',
+      '14845463',
+      '14470801',
+    ].map((id, i) => ({
+      place: i + 1,
+      mark: '',
+      notes: '',
+      entrant: entries[meet]!["Men's Marathon"]?.entrants.find((ent) => ent.id === id)!,
+    }));
+    entries[meet]!["Women's Marathon"]!.results = [
+      '14424921',
+      '14664871',
+      '14523502',
+      '14465270',
+      '14453636',
+      '14262207',
+      '14423894',
+      '14534424',
+      '14289475',
+      '14477379',
+    ].map((id, i) => ({
+      place: i + 1,
+      mark: '',
+      notes: '',
+      entrant: entries[meet]!["Women's Marathon"]?.entrants.find((ent) => ent.id === id)!,
+    }));
+    continue;
+  }
   cache[meet] ??= { schedule: {}, events: {}, ids: {} };
   if (resultsLinks[meet].includes('flashresults')) {
     cache[meet].resultsSchedule ??= await (await fetch(resultsLinks[meet])).text();

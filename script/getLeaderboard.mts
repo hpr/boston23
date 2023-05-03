@@ -60,8 +60,9 @@ const getScore = (
       matchingResult = backupResult as ResultEntrant;
       doneBackup = true;
     }
+    const index = team[evt]?.indexOf(pick)!;
     const isCaptain = pick === team[evt]![0];
-    const pickScore = SCORE[matchingResult!?.place - 1] * (isCaptain ? 2 : 1) || 0;
+    const pickScore = SCORE[matchingResult!?.place - 1] * (10 - index > 0 ? 10 - index : 0) || 0;
     console.log(evt, pick.firstName, pick.lastName, matchingResult?.place, pickScore);
     scorers[matchingResult?.entrant!.id!] = pickScore;
     score += pickScore;
@@ -94,7 +95,7 @@ const fixIds = (picks: MeetTeam) => {
 const evtToGenderedCode = (evt: string): AthleticsEvent =>
   (evt[0] + disciplineCodes[evt.split(' ').slice(1).join(' ')]) as AthleticsEvent;
 
-for (const meet of ['ncaai23'] as DLMeet[]) {
+for (const meet of ['boston23'] as DLMeet[]) {
   leaderboard[meet] = [];
   for (const { picksJson, userid } of rows) {
     const picks: MeetTeam = JSON.parse(picksJson);

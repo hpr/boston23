@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "vite --host",
     "getEntries": "node --loader ts-node/esm script/getEntries.mts",
-    "getResults": "node --loader ts-node/esm script/getResults.mts",
+    "getResults": "tsc --module nodenext --outDir build script/getResults.mts && node build/getResults.mjs",
     "getAvatars": "node --loader ts-node/esm script/getAvatars.mts",
     "getBlurbs": "node --loader ts-node/esm script/getBlurbs.mts",
     "getStats": "node --loader ts-node/esm script/getStats.mts",
-    "getLeaderboard": "node --loader ts-node/esm script/getLeaderboard.mts",
+    "getLeaderboard": "tsc --module nodenext --outDir build script/getLeaderboard.mts && node build/getLeaderboard.mjs",
     "closeEntries": "node --loader ts-node/esm script/closeEntries.mts",
     "build": "tsc && vite build",
     "preview": "vite preview",
